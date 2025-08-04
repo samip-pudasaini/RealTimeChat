@@ -8,7 +8,7 @@ router.post("/signup", signup);
 router.post("/login", login);
 router.post("/logout", logout);
 
-router.put("/updateProfile", protectRoute, updateProfile); //check if authenticated,using middleware
+router.put("/update-profile", protectRoute, updateProfile); //check if authenticated,using middleware
 
 router.get("/check", protectRoute, checkAuth);
 
