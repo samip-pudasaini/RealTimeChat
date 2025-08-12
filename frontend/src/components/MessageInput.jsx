@@ -45,7 +45,15 @@ const MessageInput = () => {
       setImagePreview(null);
       if (fileInputRef.current) fileInputRef.current.value = "";
     } catch (error) {
-        console.error("Failed to send message:", error);
+      console.error("Failed to send message:", error);
+    }
+  };
+
+  // Handle Enter key press on the text input
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault(); // Prevent default Enter behavior (like new line)
+      handleSendMessage(e); // Trigger form submission
     }
   };
 
@@ -71,7 +79,8 @@ const MessageInput = () => {
         </div>
       )}
 
-      <form onSubmit={handleSendMessage} className="flex items-center gap-2">
+      <form onSubmit={handleSendMessage} 
+            className="flex items-center gap-2">
         <div className="flex-1 flex gap-2">
           <input
             type="text"
@@ -79,6 +88,7 @@ const MessageInput = () => {
             placeholder="Type a message..."
             value={text}
             onChange={(e) => setText(e.target.value)}
+            onKeyDown={handleKeyDown} // Add keyDown handler
           />
           <input
             type="file"
@@ -92,6 +102,9 @@ const MessageInput = () => {
             className={`hidden sm:flex btn btn:circle
             ${imagePreview ? "text-emerald-500" : "text-zinc-400"}`}
             onClick={() => fileInputRef.current?.click()}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") e.preventDefault();
+            }}
           >
             <Image size={20} />
           </button>
