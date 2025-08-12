@@ -12,10 +12,10 @@ const messageSchema = new mongoose.Schema(
             ref: "User",
             required: true,
         },
-        password: {
+        text: {
             type: String,
         },
-        profilePic: {
+        image: {
             type: String,
         },
     },
