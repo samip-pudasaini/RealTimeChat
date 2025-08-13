@@ -7,7 +7,7 @@ import MessageSkeleton from "./skeleton/messageSkeleton";
 import { useAuthStore } from "../store/useAuthStore";
 
 const ChatContainer = () => {
-  const { messages, getMessages, isMessageLoading, selectedUser } =
+  const { messages, getMessages, isMessageLoading, selectedUser, subscribeToMessage, unsubscribeToMessage } =
     useChatStore();
 
   const { authUser } = useAuthStore();
@@ -15,7 +15,11 @@ const ChatContainer = () => {
 
   useEffect(() => {
     getMessages(selectedUser._id);
-  }, [selectedUser._id, getMessages]);
+
+    subscribeToMessage();
+
+    return () => unsubscribeToMessage();
+  }, [selectedUser._id, getMessages, subscribeToMessage, unsubscribeToMessage]);
 
   useEffect(() => {
     if (chatContainerRef.current) {
