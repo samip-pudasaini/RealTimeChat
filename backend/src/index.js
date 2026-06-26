@@ -28,9 +28,11 @@ app.use("/api/message", messageRoutes);
 if(process.env.NODE_ENV==="production"){
     app.use(express.static(path.join(_dirname, "../frontend/dist")));
 
-    app.get ("*splat", (req, res) => {
-        res.sendFile(path.join(_dirname, "../frontend", "dist", "index.html"));
-    })
+    app.get("/{*splat}", (req, res) => {
+    res.status(404).json({
+        message: "Route not found"
+    });
+});
 }
 
 server.listen(PORT, () => {
